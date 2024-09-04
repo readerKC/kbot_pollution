@@ -1,9 +1,6 @@
 import discord
 import random,os
 from discord.ext import commands
-import requests
-import nest_asyncio
-nest_asyncio.apply()
 
 def cevaplar ():
     random_cevap = random.randint(1,4)
@@ -18,7 +15,7 @@ def cevaplar ():
 
 intents = discord.Intents.default()
 intents.message_content = True
-bot = commands.Bot(command_prefix='$', intents=intents)
+bot = commands.Bot(command_prefix='!', intents=intents)
 @bot.event
 async def on_ready():
     print(f'{bot.user} olarak giriş yaptık')
@@ -27,7 +24,7 @@ async def hello(ctx):
     await ctx.send("Selam")
 
 @bot.command()
-async def hcwdap(ctx):
+async def pollution(ctx):
     await ctx.send(f'Çevre kirliliği hakkında şunu yapabliriz: {cevaplar()}')
 
 @bot.command()
@@ -39,17 +36,27 @@ async def photo(ctx):
         picture = discord.File(f)
         await ctx.send(file=picture)
 
-def get_fox_image_url():    
-    url = 'https://randomfox.ca/floof/'
-    res = requests.get(url)
-    data = res.json()
-    return data['image']
+@bot.command()
+async def neyapmali(ctx):
+  folder_item2 = os.listdir('images-2')
+  img2 = random.choice(folder_item2)
+
+  with open(f'images-2/{img2}', 'rb') as f:
+        picture2 = discord.File(f)
+        await ctx.send(file=picture2)
+
+@bot.command()
+async def airp(ctx):
+  folder_item3 = os.listdir('images-3')
+  img3 = random.choice(folder_item3)
+
+  with open(f'images-3/{img3}', 'rb') as f:
+        picture3 = discord.File(f)
+        await ctx.send(file=picture3)
 
 
-@bot.command('fox')
-async def fox(ctx):
-    image_url = get_fox_image_url()
-    await ctx.send(image_url)
+
+
 
 
 
